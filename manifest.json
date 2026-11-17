@@ -1,0 +1,30 @@
+{
+ "name": "آفاق للوساطة المالية",
+ "short_name": "آفاق",
+ "description": "قارن شركات الوساطة وافتح حسابك عبر آفاق",
+ "lang": "ar",
+ "dir": "rtl",
+ "start_url": "./",
+ "scope": "./",
+ "display": "standalone",
+ "background_color": "#f7f3ea",
+ "theme_color": "#ffffff",
+ "icons": [
+  {
+   "src": "icon-192.png",
+   "sizes": "192x192",
+   "type": "image/png"
+  },
+  {
+   "src": "icon-512.png",
+   "sizes": "512x512",
+   "type": "image/png"
+  },
+  {
+   "src": "icon-maskable-512.png",
+   "sizes": "512x512",
+   "type": "image/png",
+   "purpose": "maskable"
+  }
+ ]
+}

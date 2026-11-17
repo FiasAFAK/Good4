@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0a0907">
+<title>أخبار الفوركس | آفاق للوساطة المالية</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800&family=Reem+Kufi:wght@600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a0907;--surface:#14110a;--text:#f3e3b3;--muted:#a89b72;--gold:#d9b455;--line:#2e2814}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{background:var(--bg);color:var(--text);font-family:Cairo,Tahoma,sans-serif;display:flex;flex-direction:column;min-height:100vh;line-height:1.6}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:900px;margin:0 auto;padding:0 14px;width:100%}
+header{background:var(--bg);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:10}
+header .wrap{display:flex;align-items:center;justify-content:space-between;height:58px}
+.brand{display:flex;align-items:center;gap:8px;font-family:"Reem Kufi",Cairo,sans-serif;font-size:15px;font-weight:600}
+.brand img{width:36px;height:36px;border-radius:50%}
+.back-btn{padding:7px 14px;border-radius:999px;border:1px solid #6e5a22;font-size:13px}
+main{flex:1;display:flex;flex-direction:column;padding-top:12px}
+h1{font-size:clamp(18px,4vw,24px);font-weight:800;color:#f6e7b8;margin-bottom:10px}
+.tabs{display:flex;gap:8px;margin-bottom:10px}
+.tabs button{flex:1;padding:9px 12px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--muted);font:inherit;font-size:14px;font-weight:600;cursor:pointer}
+.tabs button.on{background:linear-gradient(135deg,#f1d47a,#b98a22);color:#1a1405;border-color:transparent}
+.box{flex:1;min-height:560px;height:calc(100vh - 220px);border:1px solid var(--line);border-radius:14px;overflow:hidden;background:#131722;position:relative}
+.pane{position:absolute;inset:0;display:none}
+.pane.on{display:block}
+.tradingview-widget-container,.tradingview-widget-container__widget{height:100%;width:100%}
+.note{text-align:center;color:var(--muted);font-size:12px;margin:10px 0 14px}
+footer{border-top:1px solid var(--line);padding:14px 0;text-align:center;color:#8d8260;font-size:12px}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+  <a class="brand" href="./"><img src="icon-192.png" alt="آفاق"><span>آفاق الوساطة المالية</span></a>
+  <a class="back-btn" href="./">← الرئيسية</a>
+</div></header>
+<main class="wrap">
+  <h1>أخبار الفوركس والأسواق</h1>
+  <div class="tabs" role="tablist">
+    <button class="on" data-p="news" role="tab">آخر الأخبار</button>
+    <button data-p="cal" role="tab">التقويم الاقتصادي</button>
+  </div>
+  <div class="box">
+    <div class="pane on" id="p-news"></div>
+    <div class="pane" id="p-cal"></div>
+  </div>
+  <p class="note">الأخبار والتقويم عبر TradingView، وأغلب العناوين بالإنجليزية من وكالات أنباء عالمية.</p>
+</main>
+<footer><div class="wrap">© 2026 آفاق للوساطة المالية</div></footer>
+<script>
+(function(){
+var W={
+ news:{src:'https://s3.tradingview.com/external-embedding/embed-widget-timeline.js',
+  cfg:{feedMode:'market',market:'forex',isTransparent:true,displayMode:'regular',width:'100%',height:'100%',colorTheme:'dark',locale:'ar'}},
+ cal:{src:'https://s3.tradingview.com/external-embedding/embed-widget-events.js',
+  cfg:{colorTheme:'dark',isTransparent:true,width:'100%',height:'100%',locale:'ar',importanceFilter:'-1,0,1',currencyFilter:'USD,EUR,GBP,JPY,CHF,AUD,CAD,NZD'}}
+};
+var done={};
+function mount(k){
+ if(done[k])return;done[k]=1;
+ var host=document.getElementById('p-'+k);
+ var c=document.createElement('div');c.className='tradingview-widget-container';
+ var w=document.createElement('div');w.className='tradingview-widget-container__widget';c.appendChild(w);
+ var s=document.createElement('script');s.type='text/javascript';s.async=true;s.src=W[k].src;
+ s.text=JSON.stringify(W[k].cfg);
+ c.appendChild(s);host.appendChild(c);
+}
+document.querySelectorAll('.tabs button').forEach(function(b){
+ b.onclick=function(){
+  document.querySelectorAll('.tabs button').forEach(function(x){x.classList.toggle('on',x===b)});
+  document.querySelectorAll('.pane').forEach(function(p){p.classList.toggle('on',p.id==='p-'+b.dataset.p)});
+  mount(b.dataset.p);
+ };
+});
+mount('news');
+})();
+</script>
+</body>
+</html>
